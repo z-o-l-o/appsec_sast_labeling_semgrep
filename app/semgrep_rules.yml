@@ -1,0 +1,36 @@
+rules:
+  - id: py-eval-usage
+    languages: [python]
+    message: "Использование eval может привести к выполнению произвольного кода."
+    severity: ERROR
+    pattern: eval(...)
+
+  - id: py-eval-wrapper-usage
+    languages: [python]
+    message: "Вызов execute_expression использует eval внутри."
+    severity: WARNING
+    pattern: execute_expression(...)
+
+  - id: py-os-system
+    languages: [python]
+    message: "Вызов os.system потенциально опасен (команда оболочки)."
+    severity: WARNING
+    pattern: os.system(...)
+
+  - id: py-command-wrapper-usage
+    languages: [python]
+    message: "Вызов run_command_template приводит к выполнению системной команды."
+    severity: WARNING
+    pattern: run_command_template(...)
+
+  - id: py-yaml-load
+    languages: [python]
+    message: "yaml.load без безопасного Loader может быть небезопасен."
+    severity: WARNING
+    pattern: yaml.load(...)
+
+  - id: py-requests-no-verify
+    languages: [python]
+    message: "requests.get с verify=False отключает проверку TLS-сертификата."
+    severity: WARNING
+    pattern: requests.get(..., verify=False)
