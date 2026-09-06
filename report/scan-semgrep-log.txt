@@ -1,0 +1,135 @@
+semgrep scan --config ./semgrep_rules.yml . --verbose --no-rewrite-rule-ids
+
+┌──── ○○○ ────┐
+│ Semgrep CLI │
+└─────────────┘
+
+running 6 rules from 1 config semgrep_rules.yml_0
+Rules:
+- py-command-wrapper-usage
+- py-eval-usage
+- py-eval-wrapper-usage
+- py-os-system
+- py-requests-no-verify
+- py-yaml-load
+Scanning 5 files (only git-tracked) with 6 Code rules:
+            
+  CODE RULES
+  Scanning 4 files with 6 python rules.
+                    
+  SUPPLY CHAIN RULES
+                  
+  No rules to run.
+                  
+          
+  PROGRESS
+   
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00                                                                                                                        
+SCA findings adjustment: No SCA rules to adjust
+                   
+                   
+┌─────────────────┐
+│ 9 Code Findings │
+└─────────────────┘
+                         
+    app.py
+    ❯❱ py-eval-wrapper-usage
+          ❰❰ Blocking ❱❱
+          Вызов execute_expression использует eval внутри.
+                                                          
+           18┆ result = execute_expression(prepared)
+            ⋮┆----------------------------------------
+           20┆ result = execute_expression(expr)
+   
+    ❯❱ py-command-wrapper-usage
+          ❰❰ Blocking ❱❱
+          Вызов run_command_template приводит к выполнению системной команды.
+                                                                             
+           36┆ run_command_template(command)
+   
+    ❯❱ py-requests-no-verify
+          ❰❰ Blocking ❱❱
+          requests.get с verify=False отключает проверку TLS-сертификата.
+                                                                         
+           50┆ r = requests.get(target, verify=False)
+                                   
+    command_utils.py
+    ❯❱ py-os-system
+          ❰❰ Blocking ❱❱
+          Вызов os.system потенциально опасен (команда оболочки).
+                                                                 
+            7┆ os.system(full)
+            ⋮┆----------------------------------------
+           14┆ os.system(command)
+                                  
+    config_utils.py
+    ❯❱ py-yaml-load
+          ❰❰ Blocking ❱❱
+          yaml.load без безопасного Loader может быть небезопасен.
+                                                                  
+           15┆ data = yaml.load(text)
+                                    
+    dangerous_eval.py
+   ❯❯❱ py-eval-usage
+          ❰❰ Blocking ❱❱
+          Использование eval может привести к выполнению произвольного кода.
+                                                                            
+            4┆ result = eval(stripped)
+            ⋮┆----------------------------------------
+           10┆ result = eval(expr)
+
+
+========================================
+Files skipped:
+========================================
+
+  Always skipped by Semgrep:
+
+   • <none>
+
+  Skipped by .gitignore:
+  (Disable by passing --no-git-ignore)
+
+   • <all files not listed by `git ls-files` were skipped>
+
+  Skipped by .semgrepignore:
+  - https://semgrep.dev/docs/ignoring-files-folders-code/#understand-semgrep-defaults
+
+   • <none>
+
+  Skipped by --include patterns:
+
+   • <none>
+
+  Skipped by --exclude patterns:
+
+   • <none>
+
+  Files that couldn't be accessed:
+
+   • <none>
+
+  Skipped by limiting to files smaller than 1000000 bytes:
+  (Adjust with the --max-target-bytes flag)
+
+   • <none>
+
+  Partially analyzed due to parsing or internal Semgrep errors
+
+   • <none>
+
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 9 (9 blocking)
+ • Rules run: 6
+ • Targets scanned: 4
+ • Parsed lines: ~100.0%
+ • Scan was limited to files tracked by git
+Ran 6 rules on 4 files: 9 findings.
+
+⏫ A new version of Semgrep is available. See https://semgrep.dev/docs/upgrading
+Not sending pseudonymous metrics since metrics are configured to AUTO, registry usage is False, and login status is False
