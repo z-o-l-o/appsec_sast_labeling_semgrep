@@ -9,7 +9,7 @@
 ## Структыра анализа:
 
 Для каждого выбранного срабатывания указать:
-- Тип срабатывания : TP (True Positive) / FP (False Positive) и обогсновать
+- Тип срабатывания : TP (True Positive) / FP (False Positive) и обосновать
 - Правило Semgrep
 •	id
 •	message
